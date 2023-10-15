@@ -6,22 +6,23 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "mysql"
     url      = env("DATABASE_URL")
+    relationMode = "prisma"
 }
 
-model User {
-  id    Int     @id @default(autoincrement)
-  sport String? @unique
+model Slot {
+  id    String     @id @default(cuid())
+  sport String @db.VarChar(255)
   timeSlotStart   DateTime
   timeSlotEnd   DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  subSection FieldSubSection[]
+  subSection FieldSubSection
 }
 enum FieldSubSection {
- 1A
- 1B
- 2A
- 2B
+ OneA
+ OneB
+ TwoA
+ TwoB
 }

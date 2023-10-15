@@ -1,4 +1,4 @@
-import { exampleRouter } from "when_can_i_play/server/api/routers/example";
+import { slotRouterouter } from "when_can_i_play/server/api/routers/slot";
 import { createTRPCRouter } from "when_can_i_play/server/api/trpc";
 
 /**
@@ -7,7 +7,7 @@ import { createTRPCRouter } from "when_can_i_play/server/api/trpc";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  example: exampleRouter,
+  slot: slotRouter,
 });
 
 // export type definition of API
