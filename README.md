@@ -5,6 +5,5 @@
 With Docker Desktop running, run the following commands from the `backend` directory:
 
 ```bash
-docker compose build
-docker compose up
+docker compose build && docker compose up
 ```
