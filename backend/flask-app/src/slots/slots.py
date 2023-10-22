@@ -13,4 +13,10 @@ def all_slots() -> list:
     response.status_code = 200
     return response
 
-# create, read, update, delete
+# create route
+
+# read route
+
+# update route
+
+# delete route
