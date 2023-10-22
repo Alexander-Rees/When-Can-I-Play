@@ -1,9 +1,9 @@
 # f23-group16
 
-## Launching the Application
+## Launching the Backend
 
-With Docker Desktop running, run the following commands from the `backend` directory:
+Run the following commands from the root directory of the project to launch the backend:
 
 ```bash
-docker compose build && docker compose up
+./scripts/backend.sh
 ```
