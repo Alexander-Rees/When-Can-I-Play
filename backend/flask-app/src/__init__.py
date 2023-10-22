@@ -5,7 +5,7 @@ from src.db.db import db
 def create_app():
     app = Flask(__name__)
 
-    app.config['SECRET_KEY'] = open('/secrets/secret_key.txt').readline()
+    app.config['SECRET_KEY'] = 'rust_is_the_best_language-ferris_the_crab'
 
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///when_can_i_play.db"
 
