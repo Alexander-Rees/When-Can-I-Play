@@ -1,17 +1,17 @@
-CREATE DATABASE [DB_NAME];
-GRANT ALL PRIVILEGES ON [DB_NAME].* TO 'webapp'@'%';
+CREATE DATABASE [When_Can_I_Play_DB];
+GRANT ALL PRIVILEGES ON [When_Can_I_Play_DB].* TO 'webapp'@'%';
 FLUSH PRIVILEGES;
 
-USE DB_NAME;
+USE When_Can_I_Play_DB;
 
-CREATE TABLE administrator
+CREATE TABLE slots
 (
-    adminID      INT AUTO_INCREMENT NOT NULL,
-    phone_number VARCHAR(15) NOT NULL,
-    email        VARCHAR(50) NOT NULL,
-    first_name   VARCHAR(50) NOT NULL,
-    middle_name  VARCHAR(50),
-    last_name    VARCHAR(50) NOT NULL,
-    PRIMARY KEY (adminID),
-    CONSTRAINT Unique_Contact_Info UNIQUE (phone_number, email)
+    slotID      INT AUTO_INCREMENT NOT NULL,
+    startTime        datetime NOT NULL,
+    endTime          datetime NOT NULL,
+    sport   VARCHAR(50) NOT NULL,
+    createdAt   datetime default CURRENT_TIMESTAMP NOT NULL,
+    updatedAt    datetime default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
+    subSection ENUM('1A', '1B', '2A', '2B')
+    PRIMARY KEY (slotID),
 );
