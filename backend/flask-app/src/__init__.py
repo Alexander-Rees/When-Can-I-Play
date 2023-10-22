@@ -18,19 +18,15 @@ def create_app():
     app.config['MYSQL_DATABASE_PASSWORD'] = open('/secrets/db_password.txt').readline()
     app.config['MYSQL_DATABASE_HOST'] = 'db'
     app.config['MYSQL_DATABASE_PORT'] = 3306
-    app.config['MYSQL_DATABASE_DB'] = 'vesti_db'
+    app.config['MYSQL_DATABASE_DB'] = 'DB_NAME'
 
     # Initialize the database object with the settings above. 
     db.init_app(app)
 
     # Import the various routes
-    from src.admins.admins import admins
-    from src.advisors.advisors import advisors
-    from src.clients.clients import clients
+    from src.slots.slots import slots
 
     # Register the routes that we just imported, so they can be properly handled
-    app.register_blueprint(admins, url_prefix='/adm')
-    app.register_blueprint(advisors, url_prefix='/adv')
-    app.register_blueprint(clients, url_prefix='/cli')
+    app.register_blueprint(slots, url_prefix='/slots')
 
     return app
