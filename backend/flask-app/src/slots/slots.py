@@ -18,7 +18,7 @@ def all_slots() -> list:
 # read route
 
 # update route
-@slots.route('/update/<int:slotID>', methods=['PUT']) #might need to be slotID without _
+@slots.route('/update/<int:slotID>', methods=['PUT']) #might need to be slotID instead slot_id
 def update_slot(slotID):
     data = request.get_json()
 
