@@ -1,8 +1,8 @@
 import pandas as pd
 from datetime import datetime
 
-def read_csv():
-    time_df = pd.read_excel(io="2023 Fall Master Schedule.xlsx", sheet_name='Master Schedule', parse_dates=['Time (V/JV)'])
+def get_data():
+    time_df = pd.read_excel(io="backend/flask-app/src/Data/2023_Fall_Master_Schedule.xlsx", sheet_name='Master Schedule', parse_dates=['Time (V/JV)'])
     time_df = time_df.drop(['AT Coverage', 'Notes', 'Score', 'Type', 'Home', 'Visitor'], axis=1)
     time_df = time_df.loc[time_df['Site'] == 'Carter']
     time_df = time_df.reset_index(drop=True)
@@ -33,14 +33,14 @@ def read_csv():
     def split_and_calculate_end_time(time_str):
         if '-' in time_str:
             if 'PM' in time_str:
-            half = ' PM'
+                half = ' PM'
             else:
-            half = ' AM'
-            times = time_str.split(' - ')
-            start_time = times[0] + half
-            start_time = datetime.strptime(start_time, "%I:%M %p")
-            start_time = start_time.strftime("%H:%M %p")[:-3]
-            end_time = (pd.to_datetime(start_time, format='%H:%M') + pd.Timedelta(hours=3)).strftime('%H:%M')
+                half = ' AM'
+                times = time_str.split(' - ')
+                start_time = times[0] + half
+                start_time = datetime.strptime(start_time, "%I:%M %p")
+                start_time = start_time.strftime("%H:%M %p")[:-3]
+                end_time = (pd.to_datetime(start_time, format='%H:%M') + pd.Timedelta(hours=3)).strftime('%H:%M')
         else:
             start_time = time_str
             end_time = (pd.to_datetime(time_str, format='%H:%M:%S') + pd.Timedelta(hours=2)).strftime('%H:%M')
@@ -51,4 +51,4 @@ def read_csv():
 
     # Drop the original 'Time' column
     time_df.drop(columns=['Time (V/JV)'], inplace=True)
-return time_df
+    return time_df
