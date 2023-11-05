@@ -5,7 +5,7 @@ os_type=$(uname)
 cd backend/db
 sqlite3 when_can_i_play.db < init.sql
 
-cd ../flask-app
+cd ../app
 
 if [ "$os_type" == "Darwin" ]; then
   python3 -m venv venv
