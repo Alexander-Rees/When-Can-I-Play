@@ -8,7 +8,9 @@ slots = Blueprint('slots', __name__)
 @slots.route('/slots', methods=['GET'])
 def all_slots() -> list[Slot]:
     slots = db.session.execute(db.select(Slot).order_by(Slot.startTime)).scalars()
-    return make_response(jsonify(slots), 200)
+    response = make_response(jsonify({'message': 'Slots read successfully', 'slots':slots}))
+    response.status_code = 200
+    return response
 
 
 # create route
@@ -28,36 +30,42 @@ def create_slot():
 # read route
 
 # Read route to retrieve information from the database
-@app.route('/get_data/<int:data_id>', methods=['GET'])
-def get_data(data_id):
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM your_table WHERE id = ?', (data_id,))
-    data = cursor.fetchone()
-    conn.close()
-
-    if data is None:
-        return jsonify({'error': 'Data not found'}), 404
-
-    return jsonify(dict(data))
-
-# update route
-@slots.route('/update/<int:slotID>', methods=['PUT']) #might need to be slotID instead slot_id
-def update_slot(slotID):
-
-
-    # Update the slot in the database
-    cursor = db.get_db().cursor()
-insert()
-
-
-
-
-    cursor.execute('UPDATE slots SET column1 = ?, column2 = ? WHERE id = ?', (data['value1'], data['value2'], slotID))
-    db.get_db().commit()
-
-    response = make_response(jsonify({'message': 'Slot updated successfully'}))
+@app.route('/slot/<int:slot_id>', methods=['GET'])
+def slot_detail(slot_id):
+    slot = db.get_or_404(Slot, slot_id)
+    response = make_response(jsonify({'message': 'Slot read successfully', 'slot':slot} ))
     response.status_code = 200
     return response
 
+# update route
+@slots.route('/update/<int:slot_id>', methods=['PUT'])
+def update_slot(slot_id):
+    slot = db.get_or_404(Slot, slot_id)
+    data = request.get_json()
+
+    if 'startTime' in data:
+        slot.startTime = data['startTime']
+    if 'endTime' in data:
+        slot.endTime = data['endTime']
+    if 'sport' in data:
+        slot.sport = data['sport']
+    if 'subSection' in data:
+        slot.subSection = data['subSection']
+
+    db.session.commit()
+    
+    response = make_response(jsonify({'message': 'Slot updated successfully', 'slot': slot}))
+    response.status_code = 200
+    return response
+    
+
 # delete route
+@app.route("/slot/<int:slot_id>/delete", methods=["POST"])
+def slot_delete(slot_id):
+    slot = db.get_or_404(Slot, slot_id)
+
+    db.session.delete(slot)
+    db.session.commit()
+    response = make_response(jsonify({'message': 'Slot deleted successfully'}))
+    response.status_code = 200
+    return response
