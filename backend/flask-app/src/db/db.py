@@ -1,16 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from enum import Enum
 
 db = SQLAlchemy()
-
-
-class SubSection(Enum):
-    ONE_A = '1A'
-    ONE_B = '1B'
-    TWO_A = '2A'
-    TWO_B = '2B'
-
 
 class Slot(db.Model):
     __tablename__ = 'slots'
@@ -21,4 +12,10 @@ class Slot(db.Model):
     sport = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updatedAt = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
-    subSection = db.Column(db.Enum(SubSection), nullable=False)
+    subSection = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, startTime, endTime, sport, subSection):
+        self.startTime = datetime.strptime(startTime, '%Y-%m-%d %H:%M:%S')
+        self.endTime = datetime.strptime(endTime, '%Y-%m-%d %H:%M:%S')
+        self.sport = sport
+        self.subSection = subSection

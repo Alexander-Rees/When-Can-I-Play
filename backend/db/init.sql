@@ -9,5 +9,5 @@ CREATE TABLE slots (
     sport TEXT NOT NULL,
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    subSection TEXT CHECK (subSection IN ('1A', '1B', '2A', '2B')) NOT NULL
+    subSection TEXT NOT NULL
 );
