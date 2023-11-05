@@ -6,3 +6,4 @@ venv/
 instance/
 sqlite_db/
 **.db
+node_modules/
