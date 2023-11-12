@@ -36,7 +36,7 @@ export default function Home() {
           <div>
             {/* Header buttons */}
             <button className="bg-black text-white rounded-full px-4 py-2 mr-2">Report Field Activity</button>
-            <Link href="/spaces" passHref>
+            <Link href="/" passHref>
               <a className="bg-black text-white rounded-full px-4 py-2 inline-block">
                 When Can I Play?
               </a>
