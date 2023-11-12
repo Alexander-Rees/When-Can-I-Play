@@ -35,11 +35,12 @@ export default function Home() {
           <h1 className="text-xl font-bold">Home</h1>
           <div>
             {/* Header buttons */}
-            <button className="bg-black text-white rounded-full px-4 py-2 mr-2">Report Field Activity</button>
-            <Link href="/" passHref>
-              <a className="bg-black text-white rounded-full px-4 py-2 inline-block">
-                When Can I Play?
-              </a>
+            <Link href="/when-can-I" className="bg-black text-white rounded-full px-4 py-2 mr-2">
+              Report Field Activity
+            </Link>
+
+            <Link href="/report" className="bg-black text-white rounded-full px-4 py-2 inline-block">
+              When Can I Play?
             </Link>
           </div>
         </div>
