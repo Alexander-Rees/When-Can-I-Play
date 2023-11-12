@@ -1,0 +1,18 @@
+/* Calendar.css */
+.react-calendar {
+    max-width: 100%;
+    background: #ed5e5e; /* Set background color to white */
+  }
+  
+  .react-calendar__tile {
+    background: #fff; /* Set each day's background color to white */
+    color: #000; /* Set text color to black */
+  }
+  
+  .react-calendar__tile--active {
+    background: #ccc; /* Set background color for the active (selected) day */
+  }
+  
+  /* Add any additional styling as needed */
+
+/*will need to render the EmptyCalendar component to our main file, because it is not connected I think to the when-can-I folder
