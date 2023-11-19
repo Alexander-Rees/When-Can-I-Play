@@ -1,13 +1,15 @@
 import pandas as pd
 from datetime import datetime
-import json
+from src.db.db import Slot, db
+
 
 def parse_sheet() -> pd.DataFrame:
-    time_df = pd.read_excel(io="backend/data/sheet.xlsx", sheet_name='Master Schedule', parse_dates=['Time (V/JV)'])
+    time_df = pd.read_excel(io="../data/sheet.xlsx", sheet_name='Master Schedule', parse_dates=['Time (V/JV)'])
     time_df = time_df.drop(['AT Coverage', 'Notes', 'Score', 'Type', 'Home', 'Visitor'], axis=1)
     time_df = time_df.loc[time_df['Site'] == 'Carter']
     time_df['Date'] = time_df['Date'].dt.strftime('%Y-%m-%d')
     time_df = time_df.reset_index(drop=True)
+
     def standardize_time(time_str) -> str:
         # Check if the time string contains a range (e.g., '9:30/10:30 AM')
         if '/' in time_str:
@@ -50,7 +52,6 @@ def parse_sheet() -> pd.DataFrame:
         if len(end_time) == 5:
             end_time = end_time + ':00'
         return start_time, end_time
-    
 
     # Apply the function to create 'Start Time' and 'End Time' columns
     time_df[['Start Time', 'End Time']] = time_df['Time (V/JV)'].apply(split_and_calculate_end_time).apply(pd.Series)
@@ -63,10 +64,7 @@ def parse_sheet() -> pd.DataFrame:
 
 
 def insert_sheet_into_db(sheet: pd.DataFrame) -> None:
-    # TODO
-    # for each row, create a Slot object and insert it into the database
-    # refer to the create_slot route for help
-    print(sheet)  # remove this, just an example
-
-data_table = parse_sheet().to_dict('records')
-# print(data_table)
+    with db.session.begin():
+        for _, row in sheet.iterrows():
+            slot = Slot(startTime=row['Start Time'], endTime=row['End Time'], sport=row['Sport'], subSection=row['Site'])
+            db.session.add(slot)
