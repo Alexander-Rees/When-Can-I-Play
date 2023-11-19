@@ -31,7 +31,7 @@ export default function Home() {
       <div className="w-64 bg-red-500 text-white p-4 fixed h-full"> {/* Make sidebar fixed and full height */}
         {/* Sidebar content */}
       </div>
-
+  
       {/* Main content */}
       <div className="flex-1 p-4 ml-64"> {/* Add left margin to make room for the sidebar */}
         {/* Header */}
@@ -42,13 +42,13 @@ export default function Home() {
             <Link href="/report" className="bg-black text-white rounded-full px-4 py-2 mr-2">
               Report Field Activity
             </Link>
-
+  
             <Link href="/when-can-I" className="bg-black text-white rounded-full px-4 py-2 inline-block">
               When Can I Play?
             </Link>
           </div>
         </div>
-
+  
         {/* Cards */}
         <div className="grid grid-cols-3 gap-4">
           {/* Each card for locations */}
@@ -60,11 +60,15 @@ export default function Home() {
             </div>
           ))}
         </div>
-
-        {/* Footer or other content */}
+  
+        {/* Recent User Reports - Positioned at the bottom */}
+        <div className="fixed bottom-0 left-64 right-0 bg-white p-4 border-t-2 border-gray-200">
+          <p className="text-gray-600">Recent User Reports: ...</p> {/* Placeholder for actual data */}
+        </div>
       </div>
     </div>
   );
+  
 
 }
 
