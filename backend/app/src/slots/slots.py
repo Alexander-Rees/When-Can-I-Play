@@ -1,8 +1,8 @@
-from src.db.db import Slot
+from src.db.db import Slot, serialize_slot
 from flask import Blueprint, make_response, jsonify, request, Response
 from src.db.db import db
-import pandas as pd
-from src.slots.sheet_parser import data_table
+from datetime import datetime
+
 
 slots = Blueprint('slots', __name__)
 
@@ -15,45 +15,44 @@ def jsonify_response(data, status_code) -> tuple[Response, int]:
 
 @slots.route('/slots', methods=['GET'])
 def all_slots() -> tuple[Response, int]:
-    slots = db.session.execute(db.select(Slot).order_by(Slot.startTime))
-    slots_list = []
-    for row in slots:
-        print(dict(row))
-        slots_list.append(dict(row))
-    # slots_list = [dict(slot) for slot in slots]
-    data = {'message': 'Slots read successfully', 'slots': slots_list}
+    slots = Slot.query.order_by(Slot.startTime).all()
+    data = {'message': 'Slots read successfully', 'slots': [serialize_slot(slot) for slot in slots]}
     return jsonify_response(data, 200)
 
 
-@slots.route('/import', methods=['POST'])
-def import_slot() -> tuple[Response, int]:
-    data = data_table
-    slots=[]
-    for item in data_table:
-        slot = Slot(startTime=item['Start Time'], endTime=item['End Time'], sport=item['Sport'], subSection=item['Site'])
-        db.session.add(slot)
-        db.session.commit()
+@slots.route('/create', methods=['POST'])
+def create_slot() -> tuple[Response, int]:
+    data = request.get_json()
 
-        inserted_slot = {
-            'slotID': slot.slotID,
-            'startTime': slot.startTime.isoformat(),
-            'endTime': slot.endTime.isoformat(),
-            'sport': slot.sport,
-            'subSection': slot.subSection,
-            'createdAt': slot.createdAt.isoformat(),
-            'updatedAt': slot.updatedAt.isoformat(),
-        }
+    start_time = datetime.strptime(data['startTime'], '%Y-%m-%d %H:%M:%S')
+    end_time = datetime.strptime(data['endTime'], '%Y-%m-%d %H:%M:%S')
 
-        slots.append(inserted_slot)
+    if start_time >= end_time:
+        error_data = {'message': 'Start time must be before end time'}
+        return jsonify_response(error_data, 400)
 
-    data = {"message": "Slots imported successfully", "slots": slots}
+    slot = Slot(startTime=data['startTime'], endTime=data['endTime'], sport=data['sport'], subSection=data['subSection'])
+    db.session.add(slot)
+    db.session.commit()
+
+    inserted_slot = {
+        'slotID': slot.slotID,
+        'startTime': slot.startTime.isoformat(),
+        'endTime': slot.endTime.isoformat(),
+        'sport': slot.sport,
+        'subSection': slot.subSection,
+        'createdAt': slot.createdAt.isoformat(),
+        'updatedAt': slot.updatedAt.isoformat(),
+    }
+
+    data = {"message": "Slot created successfully", "slot": inserted_slot}
     return jsonify_response(data, 201)
 
 
 @slots.route('/slot/<int:slot_id>', methods=['GET'])
 def slot_detail(slot_id) -> tuple[Response, int]:
     slot = db.get_or_404(Slot, slot_id)
-    data = {'message': 'Slot read successfully', 'slot': slot}
+    data = {'message': 'Slot read successfully', 'slot': serialize_slot(slot)}
     return jsonify_response(data, 200)
 
 
@@ -68,7 +67,7 @@ def update_slot(slot_id) -> tuple[Response, int]:
 
     db.session.commit()
 
-    data = {'message': 'Slot updated successfully', 'slot': slot}
+    data = {'message': 'Slot updated successfully', 'slot': serialize_slot(slot)}
     return jsonify_response(data, 200)
 
 
