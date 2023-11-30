@@ -7,7 +7,8 @@ import './Calendar.css'; // Import your custom CSS file
 const EmptyCalendar = () => {
   return (
     <div>
-      <h1>When Can I Play</h1>
+      <h1 id="page-title">When Can I Play</h1>
+      <h1 >id="heatmap-label" Activity Heatmap</h1>
       <Calendar />
     </div>
   );
