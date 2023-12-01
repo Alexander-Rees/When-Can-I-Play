@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy import Integer, DateTime, String
+from typing import Union
 
 db = SQLAlchemy()
 
@@ -23,7 +24,7 @@ class Slot(db.Model):
         self.subSection = subSection
 
 
-def serialize_slot(slot: Slot) -> dict[str, str | int]:
+def serialize_slot(slot: Slot) -> dict[str, Union[int, str]]:
     return {
         'slotID': slot.slotID,
         'startTime': slot.startTime.strftime('%Y-%m-%d %H:%M:%S'),
