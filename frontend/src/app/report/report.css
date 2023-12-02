@@ -1,0 +1,71 @@
+
+
+#page-title {
+    font-size: 48px; 
+    font-weight: 700; 
+    color:black; 
+    transform: translateX(280px);
+
+}
+
+#enter-report {
+    font-size: 20px; 
+    /*font-weight: 700; */ 
+    color:black; 
+    transform: translateX(280px);
+}
+
+#user-input {
+    font-size: 20px; 
+    /*font-weight: 700; */ 
+    color:black; 
+    transform: translateX(280px);
+}
+
+#report-btn{
+    font-size: 14px; 
+    font-weight: bold; 
+    background: rgb(212, 79, 79); 
+    width: 100px; 
+    padding: 5.4px; 
+    text-align: center; 
+    text-decoration-line: underline, overline; 
+    text-transform: uppercase; 
+    border-radius: 0px; 
+    cursor: pointer; 
+    box-shadow: 0 0 1px rgba(0, 0, 0, .1); 
+    color: white; 
+    margin-left: 280px; 
+
+
+    
+
+}
+
+#report-btn:hover, :focus{
+    color: black;
+    transition-duration:0.7s; 
+}
+
+
+#table, th, td {
+    transform: translate(280px); 
+    border-collapse: collapse; 
+    width: 50%; 
+    border: 3px solid black; 
+    padding: 8px;
+    text-align: left;
+    width: 329px; 
+    margin-right:280px; 
+    font-weight: 10px; 
+    
+}
+
+#you-entered {
+    font-weight:bold;
+    margin-left: 280px; 
+}
+
+hr {
+    border-bottom: 1px solid black;
+}
